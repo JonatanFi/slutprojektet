@@ -1,26 +1,28 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<?php
+			header('Content-Type: text/html; charset=utf-8');
+		?>
+		<!--<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />-->
 		<title>project_awesome</title>
-		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>	
 <body>
 
-	<header>
-		<div id="header">
-			<h1><a href="index.php">PROJECT AWESOME</a></h1>
-		</div>
+	<header id="header">
+		<h1><a href="index.php">PROJECT AWESOME</a></h1>
 	</header>
 
 
 <?php
 
-	//spara formdata i db
+	//spara formdata i databasen
 
 	$host     = "localhost";
-	$dbname   = "project_awesome";																	//ändrad
-	$username = "project_awesome";																	//ändrad
-	$password = "awepro";																			//ändrad
+	$dbname   = "project_awesome";
+	$username = "project_awesome";
+	$password = "awepro";
 
 	$dsn = "mysql:host=$host;dbname=$dbname";
 	$attr = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
@@ -33,43 +35,41 @@
 		if(!empty($_POST))
 		{
 			$_POST = null;
-			$post    = filter_input(INPUT_POST, 'post', FILTER_SANITIZE_SPECIAL_CHARS);				//ändrad
-			$statement = $pdo->prepare("INSERT INTO subjects (name) VALUES (:post)");				//ändrad
-			$statement->bindParam(":post", $post);													//ändrad
+			$post    = filter_input(INPUT_POST, 'post', FILTER_SANITIZE_SPECIAL_CHARS);
+			$statement = $pdo->prepare("INSERT INTO subjects (name) VALUES (:post)");
+			$statement->bindParam(":post", $post);
 			$statement->execute();
 		}
 		
-		//visa form FIXAD
+		//visa form
 		?>
 		
-		<form action="index.php" method="POST">
+		<form action="index.php" method="POST" id="addSubjectForm">
 			<p>
 				<label for="subject_name">Subject Name: </label>
 				<input type="text" name="subject_name" />
 			</p>
-			<input type="submit" value="Add Subject" />
+			<input type="submit" value="Add Subject" id="submitSubject"/>
 		</form>
-		<hr />
-		
+		<nav id="existingSubjects">
+			<h2>Already existing subjects:</h2>
+			<?php
+			//visa alla subjects
+			foreach ($pdo->query("SELECT subjects.* FROM subjects") as $row)
+			{
+				echo "<p>{$row['name']}</p>";
+			}
+		?>
+		</nav>
 		<?php
-		//visa alla subjects FIXAD
-		foreach ($pdo->query("SELECT subjects.* FROM subjects") as $row)
-		{
-			echo "<p>{$row['name']}</p>";
-		}
 	}
 	else
 	{
-		echo "not connected";
+		print_r($sum_statement->errorInfo());
 	}
-
-
 ?>
-	
-	<footer>
-		<div id="footer">
-			<h5> &copy Jonatan Finsberg</h5>
-		</div>
+	<footer id="footer">
+		<h5> &copy Jonatan Finsberg</h5>
 	</footer>
 </body>
 </html>

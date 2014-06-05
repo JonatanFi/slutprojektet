@@ -1,20 +1,22 @@
+<!DOCTYPE html>
 <html>
 	<head>
+		<?php
+			header('Content-Type: text/html; charset=utf-8');
+		?>
+		<!--<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />-->
 		<title>project_awesome</title>
-		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>	
 <body>
 
-	<header>
-		<div id="header">
-			<h1><a href="index.php">PROJECT AWESOME</a></h1>
-		</div>
+	<header id="header">
+		<h1><a href="index.php">PROJECT AWESOME</a></h1>
 	</header>
 
 	<?php
 
-	//spara formdata i db
+	//spara formdata i databasen
 
 	$host     = "localhost";
 	$dbname   = "project_awesome";
@@ -37,11 +39,11 @@
 				$content	= filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
 				$image		= filter_input(INPUT_POST, 'image', FILTER_SANITIZE_SPECIAL_CHARS);
 				$subject_id	= filter_input(INPUT_POST, 'subject_id', FILTER_VALIDATE_INT);
-				$statement = $pdo->prepare("INSERT INTO summaries (title, content, image, subject_id) VALUES (:title, :content, :image, :subject_id)");		//ändrad
-				$statement->bindParam(":title", $title);																									//ändrad
-				$statement->bindParam(":content", $content);																								//ändrad
-				$statement->bindParam(":image", $image);																									//ändrad
-				$statement->bindParam(":subject_id", $subject_id);																							//ändrad
+				$statement = $pdo->prepare("INSERT INTO summaries (title, content, image, subject_id) VALUES (:title, :content, :image, :subject_id)");
+				$statement->bindParam(":title", $title);
+				$statement->bindParam(":content", $content);
+				$statement->bindParam(":image", $image);
+				$statement->bindParam(":subject_id", $subject_id);
 				if(!$statement->execute())
 					print_r($statement->errorInfo());
 			}
@@ -52,9 +54,9 @@
 			{
 				$summary_id	= filter_input(INPUT_POST, 'summary_id', FILTER_VALIDATE_INT);
 				$content	= filter_input(INPUT_POST, 'content', FILTER_SANITIZE_SPECIAL_CHARS);
-				$statement = $pdo->prepare("INSERT INTO comments (summary_id, date, content) VALUES (:summary_id, NOW() ,:content)");						//ändrad
-				$statement->bindParam(":summary_id", $summary_id);																							//ändrad
-				$statement->bindParam(":content", $content);																								//ändrad
+				$statement = $pdo->prepare("INSERT INTO comments (summary_id, date, content) VALUES (:summary_id, NOW() ,:content)");
+				$statement->bindParam(":summary_id", $summary_id);
+				$statement->bindParam(":content", $content);
 				if(!$statement->execute())
 					print_r($statement->errorInfo());
 			}
@@ -79,12 +81,11 @@
 			{
 				if($row = $sum_statement->fetch())
 				{
-					echo "	<div id=\"comment\">
+					echo "	<div id=\"summaryDetails\">
 								<h2>{$row['subject_name']} - {$row['title']}</h2>
 								<p>{$row['content']}</p>
 								<p>{$row['image']}</p>
 							</div>";
-							//<p><a href=\"summaries.php\">Back</a></p>"
 				
 						// show comment form
 					echo "<form action=\"summaries.php?summary_id={$row['id']}\" method=\"POST\">";
@@ -99,6 +100,7 @@
 							<input type="submit" />
 						</form>
 					</div>
+					<div id="comment">
 					<?php
 					// show all comments belonging to chosen summary
 					$com_statement = $pdo->prepare("SELECT * FROM comments WHERE summary_id=:summary_id ORDER BY date DESC");
@@ -112,6 +114,9 @@
 					}
 					else
 						print_r($sum_statement->errorInfo());
+					?>
+					</div>
+					<?php
 				}
 			}
 			else
@@ -121,18 +126,16 @@
 			}
 		}
 	}
-	else										//comment
+	else //show a list of all summaries and an Add Summary-button
 	{
-		//if... subject_id		en Back-knapp
-		
 		$subject_id = filter_input(INPUT_GET, 'subject_id', FILTER_VALIDATE_INT);
 		$statement = $pdo->prepare("SELECT summaries.* FROM summaries WHERE subject_id=:subject_id ORDER BY title");
 		$statement->bindParam(":subject_id", $subject_id);
 		if($statement->execute())
 		{
 			?>
-			<nav>
-				<ul>
+			<nav class="menu">
+				<ul id="summaryNavigation">
 					<li id="addSummary">
 						<a href="add_summary.php">Add Summary</a>
 					</li>
@@ -156,10 +159,8 @@
 	}
 	?>
 
-	<footer>
-		<div id="footer">
-			<h5> &copy Jonatan Finsberg</h5>
-		</div>
+	<footer id="footer">
+		<h5> &copy Jonatan Finsberg</h5>
 	</footer>
 </body>
 </html>

@@ -1,31 +1,32 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
 	<head>
+		<?php
+			header('Content-Type: text/html; charset=utf-8');
+		?>
+		<!--<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />-->
 		<title>project_awesome</title>
-		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>	
 <body>
-	<header>
-		<div id="header">
-			<h1><a href="index.php">PROJECT AWESOME</a></h1>
-		</div>
+	<header id="header">
+		<h1><a href="index.php">PROJECT AWESOME</a></h1>
 	</header>
 	
 	<nav class="menu">
-		<ul>
+		<ul id="subjectNavigation"> <!--GÖR DETTA PÅ ALLA STÄLLEN-->
 			<li id="addSubject">
 				<a href="add_subject.php">Add Subject</a>
 			</li>
 	
 			<?php
 
-				//spara formdata i db
+				//spara formdata i databasen
 
 				$host     = "localhost";
-				$dbname   = "project_awesome";																	//ändrad
-				$username = "project_awesome";																	//ändrad
-				$password = "awepro";																			//ändrad
+				$dbname   = "project_awesome";
+				$username = "project_awesome";
+				$password = "awepro";
 
 				$dsn = "mysql:host=$host;dbname=$dbname";
 				$attr = array(PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
@@ -37,8 +38,8 @@
 					{
 						$_POST = null;
 						$subject_name = filter_input(INPUT_POST, 'subject_name');
-						$statement	= $pdo->prepare("INSERT INTO subjects (name) VALUES (:subject_name)");				//ändrad
-						$statement->bindParam(":subject_name", $subject_name);													//ändrad
+						$statement	= $pdo->prepare("INSERT INTO subjects (name) VALUES (:subject_name)");
+						$statement->bindParam(":subject_name", $subject_name);
 						if(!$statement->execute())
 							print_r($statement->errorInfo());
 					}
@@ -52,10 +53,8 @@
 			?>
 		</ul>
 	</nav>
-	<footer>
-		<div id="footer">
-			<h5> &copy Jonatan Finsberg</h5>
-		</div>
+	<footer id="footer">
+		<h5> &copy Jonatan Finsberg</h5>
 	</footer>
 	
 </body>
