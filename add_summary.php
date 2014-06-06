@@ -4,7 +4,6 @@
 		<?php
 			header('Content-Type: text/html; charset=utf-8');
 		?>
-		<!--<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />-->
 		<title>project_awesome</title>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>	
@@ -56,7 +55,9 @@
 				<label for="image">Link to image (optional): </label>
 				<input type="text" name="image" id="imageTextbox"/>
 			</p>
-			<input type="submit" value="Post Summary" />
+			<div>
+				<input type="submit" value="Post Summary" class="submitButton"/>
+			</div>
 		</form>
 		<?php
 	}

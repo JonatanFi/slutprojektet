@@ -4,7 +4,6 @@
 		<?php
 			header('Content-Type: text/html; charset=utf-8');
 		?>
-		<!--<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />-->
 		<title>project_awesome</title>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>	
@@ -97,7 +96,8 @@
 								<label for="content">Comment: </label>
 								<input type="text" name="content" />
 							</p>
-							<input type="submit" />
+							
+							<input type="submit" value="Comment" class="submitButton"/>
 						</form>
 					</div>
 					<div id="comment">

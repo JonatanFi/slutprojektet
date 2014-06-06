@@ -4,7 +4,6 @@
 		<?php
 			header('Content-Type: text/html; charset=utf-8');
 		?>
-		<!--<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />-->
 		<title>project_awesome</title>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>	
@@ -49,7 +48,9 @@
 				<label for="subject_name">Subject Name: </label>
 				<input type="text" name="subject_name" />
 			</p>
-			<input type="submit" value="Add Subject" id="submitSubject"/>
+			<div>
+				<input type="submit" value="Add Subject" class="submitButton"/>
+			</div>
 		</form>
 		<nav id="existingSubjects">
 			<h2>Already existing subjects:</h2>

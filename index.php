@@ -4,7 +4,6 @@
 		<?php
 			header('Content-Type: text/html; charset=utf-8');
 		?>
-		<!--<meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />-->
 		<title>project_awesome</title>
 		<link rel="stylesheet" type="text/css" href="style.css"/>
 	</head>	
@@ -14,7 +13,7 @@
 	</header>
 	
 	<nav class="menu">
-		<ul id="subjectNavigation"> <!--GÖR DETTA PÅ ALLA STÄLLEN-->
+		<ul id="subjectNavigation">
 			<li id="addSubject">
 				<a href="add_subject.php">Add Subject</a>
 			</li>

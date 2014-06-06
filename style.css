@@ -215,3 +215,7 @@ html {
 	background-position: center;
 	text-indent: 10px;
 }
+
+.submitButton {
+	text-align: right;
+}
